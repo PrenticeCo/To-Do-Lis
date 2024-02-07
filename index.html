@@ -6,12 +6,42 @@
     <title>To-Do List</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>TO-DO LIST</h1>
+    <div class="wrapper">
+      <h1 class="title">TO-DO LIST</h1>
 
-    <h3>Add Task</h3>
+      <div class="buttons">
+        <button class="new-task-btn">Add Task</button>
+        <button class="new-user-btn">Add User</button>
+        <select class="user-select">
+          <option value="" disabled selected>Select a user</option>
+        </select>
+      </div>
+      <div class="add-user-box">
+        <form>
+          <input
+            type="text"
+            id="new-user"
+            name="new-user"
+            placeholder="Enter new user"
+          />
+          <button class="new-user-submit">Submit</button>
+        </form>
+      </div>
+      <div class="tasks">
+        <h4>Example Task</h4>
+        <hr />
+      </div>
+    </div>
     <script src="main.js" async></script>
   </body>
 </html>
