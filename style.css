@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+  font-family: "Nanum Pen Script", cursive;
+}
+
+body {
+  /* background-image: url(images/background.avif); */
+  background-color: whitesmoke;
+  /* background-size: 100% 100%; */
+}
+
+.title {
+  max-width: calc(100% - 200px);
+  display: flex;
+  justify-content: flex-end;
+  margin: auto;
+  margin-top: 20px;
+  margin-right: 400px;
+  font-size: 70px;
+}
+
+.tasks {
+  padding: 10px;
+  width: calc(100% - 200px);
+  border: solid;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 20px;
+  width: calc(100% - 200px);
+  background-color: yellow;
+}
+
+.buttons {
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  gap: 40px;
+  width: calc(100% - 200px);
+}
+
+button {
+  width: 150px;
+}
+
+select {
+  width: 150px;
+  outline: none;
+}
+
+hr {
+  /* height: 2px; */
+  border: solid 2px;
+  color: black;
+}
+
+.add-user-box {
+  position: absolute;
+  border: solid;
+  padding: 20px;
+  left: 38%;
+  top: 50%;
+  z-index: 1;
+  background-color: #ffffff;
+  overflow: auto;
+  /* display: none; */
+}
+
+.wrapper {
+  position: relative;
+}
