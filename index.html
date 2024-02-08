@@ -22,11 +22,12 @@
       <div class="buttons">
         <button class="new-task-btn">Add Task</button>
         <button class="new-user-btn">Add User</button>
-        <select class="user-select">
+        <select id="userSelect" class="user-select">
           <option value="" disabled selected>Select a user</option>
         </select>
       </div>
       <div class="add-user-box">
+        <img class="cross" src="images/cross.png" />
         <form>
           <input
             type="text"
@@ -35,6 +36,18 @@
             placeholder="Enter new user"
           />
           <button class="new-user-submit">Submit</button>
+        </form>
+      </div>
+      <div class="add-task-box">
+        <img class="cross" src="images/cross.png" />
+        <form>
+          <input
+            type="text"
+            id="new-task"
+            name="new-task"
+            placeholder="Enter a task"
+          />
+          <button class="new-task-submit">Submit</button>
         </form>
       </div>
       <div class="tasks">
