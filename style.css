@@ -44,25 +44,50 @@ button {
 
 select {
   width: 150px;
-  outline: none;
 }
 
 hr {
-  /* height: 2px; */
-  border: solid 2px;
+  border: solid 1px;
   color: black;
 }
 
 .add-user-box {
   position: absolute;
-  border: solid;
-  padding: 20px;
+  border: solid 1px;
+  border-radius: 15px;
+  padding: 40px;
   left: 38%;
   top: 50%;
   z-index: 1;
   background-color: #ffffff;
   overflow: auto;
-  /* display: none; */
+  display: none;
+}
+
+.add-task-box {
+  position: absolute;
+  border: solid 1px;
+  border-radius: 15px;
+  padding: 40px;
+  left: 38%;
+  top: 50%;
+  z-index: 1;
+  background-color: #ffffff;
+  overflow: auto;
+  display: none;
+}
+
+.cross {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.cross:hover {
+  transform: scale(1.15);
+  transition: 0.3s;
 }
 
 .wrapper {
