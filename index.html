@@ -20,11 +20,23 @@
       <h1 class="title">TO-DO LIST</h1>
 
       <div class="buttons">
-        <button class="new-task-btn">Add Task</button>
-        <button class="new-user-btn">Add User</button>
-        <select id="userSelect" class="user-select">
-          <option value="" disabled selected>Select a user</option>
-        </select>
+        <div class="new-task-container">
+          <img class="new-task-outline" src="images/scribble-add.png" />
+          <button class="new-task-btn">Add Task</button>
+        </div>
+
+        <div class="new-user-container">
+          <img class="new-user-outline" src="images/scribble-add.png" />
+          <button class="new-user-btn">Add User</button>
+        </div>
+
+        <div class="user-select">
+          <img class="select-arrow" src="images/scribble-triangle.png" />
+
+          <select id="userSelect">
+            <option value="">Select a user</option>
+          </select>
+        </div>
       </div>
       <div class="add-user-box">
         <img class="cross" src="images/cross.png" />
@@ -34,8 +46,9 @@
             id="new-user"
             name="new-user"
             placeholder="Enter new user"
+            autocomplete="off"
           />
-          <button class="new-user-submit">Submit</button>
+          <button class="new-user-submit">Add</button>
         </form>
       </div>
       <div class="add-task-box">
@@ -46,15 +59,15 @@
             id="new-task"
             name="new-task"
             placeholder="Enter a task"
+            autocomplete="off"
           />
-          <button class="new-task-submit">Submit</button>
+          <button class="new-task-submit">Add</button>
         </form>
       </div>
       <div class="tasks">
-        <h4>Example Task</h4>
-        <hr />
+        <img class="bullet-point" src="images/scribble-bullet-point.png" />
       </div>
     </div>
-    <script src="main.js" async></script>
+    <script src="main.js" defer></script>
   </body>
 </html>
