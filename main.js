@@ -203,7 +203,7 @@ const displayTasks = () => {
 
     uncompletedTasks.innerHTML += `<div class="task-bullet">
       <img class="bullet-point" src="images/scribble-bullet-point.png" data-isImage1="${isImage1}" />
-      <h4 style="${strikeThroughStyle}">${task}</h4></div><hr />`; // Concatenate the HTML for each task
+      <h4 style="${strikeThroughStyle}">${task}</h4></div>`; // Concatenate the HTML for each task
   }
 };
 updatePageOnStorageChange();
@@ -211,48 +211,47 @@ userSelect.addEventListener("change", displayTasks);
 
 // CHANGE BULLET-POINT IMG AND STYLING
 
-let completedTasksArray = [];
-
 tasks.addEventListener("click", function (event) {
   const clickedElement = event.target;
-  let completedTask = clickedElement.nextElementSibling.textContent.trim();
 
-  // Check if the clicked element is a bullet point
   if (clickedElement.classList.contains("bullet-point")) {
     let isImage1 = clickedElement.getAttribute("data-isImage1") === "true";
-    const index = completedTasksArray.indexOf(completedTask);
 
     if (isImage1) {
       clickedElement.src = "images/scribble-bullet-point-filled.png";
       clickableSound = clickSound1;
-      completedTasksArray.push(completedTask);
     } else {
       clickedElement.src = "images/scribble-bullet-point.png";
       clickableSound = clickSound2;
-      completedTasksArray.splice(index, 1);
     }
     clickableSound.play();
     isImage1 = !isImage1;
     clickedElement.setAttribute("data-isImage1", isImage1.toString());
 
-    // Find the parent task element of the clicked bullet point
     const taskElement = clickedElement.closest(".task-bullet");
+    const username = userSelect.value;
+    const taskText = taskElement.querySelector("h4").textContent;
 
-    // Check if isImage1 is false and adjust the styling
     if (!isImage1) {
       taskElement.querySelector("h4").style.textDecoration = "line-through";
-
-      // Check if the task is already in the completedTasksArray and remove it
-      // if (index !== -1) {
-      //   completedTasksArray.splice(index, 1);
-      // } else {
-      //   completedTasksArray.push(completedTask);
-      // }
-
-      console.log(completedTasksArray);
+      const storedCompletedTasks =
+        JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
+      storedCompletedTasks.push(taskElement.querySelector("h4").textContent);
+      localStorage.setItem(
+        `${username}_completed_tasks`,
+        JSON.stringify(storedCompletedTasks)
+      );
     } else {
       taskElement.querySelector("h4").style.textDecoration = "none";
-      console.log(completedTasksArray);
+      const removeCompletedTask =
+        JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
+      const updatedTasks = removeCompletedTask.filter(
+        (task) => task !== taskText
+      );
+      localStorage.setItem(
+        `${username}_completed_tasks`,
+        JSON.stringify(updatedTasks)
+      );
     }
   }
 });
