@@ -48,22 +48,9 @@ button {
   cursor: pointer;
 }
 
-.user-select {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s;
-}
-
-.user-select:hover {
-  cursor: pointer;
-  transform: translateY(-5px);
-}
-
 .select-arrow {
   position: absolute;
-  right: 0;
+  right: -5px;
   width: 20px;
   cursor: pointer;
   z-index: 2;
@@ -101,7 +88,7 @@ button {
   font-size: 25px;
   padding: 5px;
   appearance: none;
-  margin-left: -10px;
+  margin-left: -25px;
   z-index: 1;
   transition: 0.3s;
 }
@@ -110,8 +97,18 @@ button {
   cursor: pointer;
 }
 
-.scribble-line {
-  width: 200px;
+.user-select {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  text-align-last: center;
+}
+
+.user-select:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
 }
 
 hr {
@@ -130,6 +127,11 @@ hr {
   z-index: 1;
   overflow: auto;
   display: none;
+}
+
+.add-user-box__character {
+  margin-top: -15px;
+  margin-bottom: 10px;
 }
 
 .add-task-box {
@@ -182,6 +184,13 @@ hr {
   gap: 15px;
   margin-bottom: 3px;
   margin-top: 10px;
+}
+
+.completed-tasks {
+  margin-bottom: 10px;
+}
+
+.uncompleted-tasks {
 }
 
 h4 {
