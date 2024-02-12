@@ -84,7 +84,7 @@ crosses.forEach((cross) => {
 
 //CREATE LOCAL STORAGE
 
-const createLocalStorage = () => {
+const createNewUser = () => {
   const username = document.getElementById("new-user").value;
   if (username !== "") {
     // Retrieve existing data for the username
@@ -103,7 +103,7 @@ const createLocalStorage = () => {
   updatePageOnStorageChange();
 };
 
-newUserSubmit.addEventListener("click", createLocalStorage);
+newUserSubmit.addEventListener("click", createNewUser);
 
 //USER SELECT
 
@@ -116,7 +116,7 @@ const updateSelectOptions = () => {
 
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
-  defaultOption.textContent = "Select a user";
+  defaultOption.textContent = "User select";
   userSelect.appendChild(defaultOption);
 
   // Repopulate the userSelect options based on localStorage
@@ -129,8 +129,6 @@ const updateSelectOptions = () => {
 
     userSelect.appendChild(option);
   }
-
-  // Set back the selected user
   userSelect.value = selectedUser;
 };
 
@@ -170,25 +168,40 @@ newTaskSubmit.addEventListener("click", addNewTask);
 
 // DISPLAY TASKS
 
+let isImage1 = true;
+const uncompletedTasksTitle = document.createElement("div");
+const completedTasksTitle = document.createElement("div");
+const completedTasksAdd = document.createElement("div");
+const uncompletedTasks = document.querySelector(".uncompleted-tasks");
+const completedTasks = document.querySelector(".completed-tasks");
+
 const displayTasks = () => {
   const userTasks = JSON.parse(localStorage.getItem(userSelect.value)) || [];
 
   if (userTasks.length === 0) {
-    tasks.innerHTML = `<h4>No current tasks</h4><hr>`;
+    uncompletedTasks.innerHTML = `<h4>No current tasks</h4><hr>`;
+    completedTasksAdd.remove();
   } else {
-    tasks.innerHTML = "";
+    uncompletedTasksTitle.classList.add("uncompleted-tasks__title");
+    completedTasksTitle.classList.add("completed-tasks__title");
+    uncompletedTasks.innerHTML = "";
+    completedTasksAdd.classList.add("completed-tasks");
+    tasks.insertBefore(completedTasksAdd, tasks.firstChild);
+    uncompletedTasks.appendChild(uncompletedTasksTitle);
+    completedTasksAdd.appendChild(completedTasksTitle);
+    uncompletedTasksTitle.innerHTML = "Uncompleted Tasks";
+    completedTasksTitle.innerHTML = "Completed Tasks";
   }
 
   for (let i = 0; i < userTasks.length; i++) {
     const task = userTasks[i];
 
     // Set initial state of data-isImage1 attribute
-    let isImage1 = true;
 
     // Check if isImage1 is false, and apply strike-through style
     const strikeThroughStyle = isImage1 ? "" : "text-decoration: line-through;";
 
-    tasks.innerHTML += `<div class="task-bullet">
+    uncompletedTasks.innerHTML += `<div class="task-bullet">
       <img class="bullet-point" src="images/scribble-bullet-point.png" data-isImage1="${isImage1}" />
       <h4 style="${strikeThroughStyle}">${task}</h4></div><hr />`; // Concatenate the HTML for each task
   }
@@ -198,19 +211,27 @@ userSelect.addEventListener("change", displayTasks);
 
 // CHANGE BULLET-POINT IMG AND STYLING
 
+let completedTasksArray = [];
+
 tasks.addEventListener("click", function (event) {
   const clickedElement = event.target;
+  let completedTask = clickedElement.nextElementSibling.textContent.trim();
 
   // Check if the clicked element is a bullet point
   if (clickedElement.classList.contains("bullet-point")) {
     let isImage1 = clickedElement.getAttribute("data-isImage1") === "true";
+    const index = completedTasksArray.indexOf(completedTask);
 
     if (isImage1) {
       clickedElement.src = "images/scribble-bullet-point-filled.png";
+      clickableSound = clickSound1;
+      completedTasksArray.push(completedTask);
     } else {
       clickedElement.src = "images/scribble-bullet-point.png";
+      clickableSound = clickSound2;
+      completedTasksArray.splice(index, 1);
     }
-
+    clickableSound.play();
     isImage1 = !isImage1;
     clickedElement.setAttribute("data-isImage1", isImage1.toString());
 
@@ -220,8 +241,18 @@ tasks.addEventListener("click", function (event) {
     // Check if isImage1 is false and adjust the styling
     if (!isImage1) {
       taskElement.querySelector("h4").style.textDecoration = "line-through";
+
+      // Check if the task is already in the completedTasksArray and remove it
+      // if (index !== -1) {
+      //   completedTasksArray.splice(index, 1);
+      // } else {
+      //   completedTasksArray.push(completedTask);
+      // }
+
+      console.log(completedTasksArray);
     } else {
       taskElement.querySelector("h4").style.textDecoration = "none";
+      console.log(completedTasksArray);
     }
   }
 });
