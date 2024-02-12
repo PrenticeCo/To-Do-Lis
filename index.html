@@ -17,6 +17,8 @@
   </head>
   <body>
     <div class="wrapper">
+      <audio id="clickSound1" src="audio/Erase-1.mp3"></audio>
+      <audio id="clickSound2" src="audio/Erase-2.mp3"></audio>
       <h1 class="title">TO-DO LIST</h1>
 
       <div class="buttons">
@@ -41,11 +43,13 @@
       <div class="add-user-box">
         <img class="cross" src="images/cross.png" />
         <form>
+          <h2 class="add-user-box__character">Max length 12 characters</h2>
           <input
             type="text"
             id="new-user"
             name="new-user"
             placeholder="Enter new user"
+            maxlength="11"
             autocomplete="off"
           />
           <button class="new-user-submit">Add</button>
@@ -65,7 +69,7 @@
         </form>
       </div>
       <div class="tasks">
-        <img class="bullet-point" src="images/scribble-bullet-point.png" />
+        <div class="uncompleted-tasks"></div>
       </div>
     </div>
     <script src="main.js" defer></script>
