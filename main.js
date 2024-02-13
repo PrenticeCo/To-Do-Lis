@@ -29,8 +29,8 @@ newTaskScribble.addEventListener("mouseenter", function () {
 });
 
 newTaskScribble.addEventListener("mouseleave", function () {
-  newTaskBtn.style.fontWeight = "normal"; // Set it back to the original value
-  newTaskBtn.style.transform = "rotate(-3deg)"; // Reset the scale
+  newTaskBtn.style.fontWeight = "normal";
+  newTaskBtn.style.transform = "rotate(-3deg)";
 });
 
 newUserScribble.addEventListener("mouseenter", function () {
@@ -39,8 +39,8 @@ newUserScribble.addEventListener("mouseenter", function () {
 });
 
 newUserScribble.addEventListener("mouseleave", function () {
-  newUserBtn.style.fontWeight = "normal"; // Set it back to the original value
-  newUserBtn.style.transform = "rotate(5deg)"; // Reset the scale
+  newUserBtn.style.fontWeight = "normal";
+  newUserBtn.style.transform = "rotate(5deg)";
 });
 
 //UPDATE PAGE WITH LOCAL STORAGE
@@ -87,13 +87,10 @@ crosses.forEach((cross) => {
 const createNewUser = () => {
   const username = document.getElementById("new-user").value;
   if (username !== "") {
-    // Retrieve existing data for the username
     const existingData = localStorage.getItem(username);
 
-    // Check if existing data is present and is an array
     const userData = existingData ? JSON.parse(existingData) : [];
 
-    // Create a local storage entry with the username as the key and userData as the value
     localStorage.setItem(username, JSON.stringify(userData));
 
     alert(username + " added!");
@@ -119,7 +116,6 @@ const updateSelectOptions = () => {
   defaultOption.textContent = "User select";
   userSelect.appendChild(defaultOption);
 
-  // Repopulate the userSelect options based on localStorage
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
 
@@ -136,15 +132,13 @@ updateSelectOptions();
 
 newTaskScribble.addEventListener("click", function () {
   if (userSelect.value === "") {
-    // Apply temporary styles
     userSelect.style.color = "red";
     userSelect.style.transform = "scale(1.12)";
     userSelect.style.marginRight = "20px";
 
-    // Revert styles after 500 milliseconds (0.5 second)
     setTimeout(function () {
-      userSelect.style.color = ""; // Revert to the default color
-      userSelect.style.transform = ""; // Revert to the default transform
+      userSelect.style.color = "";
+      userSelect.style.transform = "";
       userSelect.style.marginRight = "0";
     }, 800);
   }
@@ -177,11 +171,8 @@ const username = userSelect.value;
 
 const displayTasks = () => {
   const completedTasksArray =
-    JSON.parse(localStorage.getItem(`dvsf_completed_tasks`)) || [];
+    JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
   const userTasks = JSON.parse(localStorage.getItem(userSelect.value)) || [];
-  // console.log(username);
-
-  console.log(completedTasksArray);
   console.log(`${userSelect.value}_completed_tasks`);
   if (userTasks.length === 0 && completedTasksArray.length === 0) {
     uncompletedTasks.innerHTML = `<h4>No current tasks</h4><hr>`;
@@ -204,7 +195,7 @@ const displayTasks = () => {
 
     uncompletedTasks.innerHTML += `<div class="task-bullet">
       <img class="bullet-point" src="images/scribble-bullet-point.png" data-isImage1="${isImage1}" />
-      <h4>${task}</h4></div>`; // Concatenate the HTML for each task
+      <h4>${task}</h4></div>`;
   }
 
   for (let i = 0; i < completedTasksArray.length; i++) {
@@ -212,7 +203,7 @@ const displayTasks = () => {
     const strikeThroughStyle = "text-decoration: line-through;";
     completedTasks.innerHTML += `<div class="task-bullet">
     <img class="bullet-point" src="images/scribble-bullet-point-filled.png" data-isImage1="${!isImage1}" />
-    <h4 style="${strikeThroughStyle}">${task}</h4></div>`; // Concatenate the HTML for each task
+    <h4 style="${strikeThroughStyle}">${task}</h4></div>`;
   }
 };
 
