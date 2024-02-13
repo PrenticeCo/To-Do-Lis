@@ -171,24 +171,30 @@ newTaskSubmit.addEventListener("click", addNewTask);
 let isImage1 = true;
 const uncompletedTasksTitle = document.createElement("div");
 const completedTasksTitle = document.createElement("div");
-const completedTasksAdd = document.createElement("div");
 const uncompletedTasks = document.querySelector(".uncompleted-tasks");
 const completedTasks = document.querySelector(".completed-tasks");
+const username = userSelect.value;
 
 const displayTasks = () => {
+  const completedTasksArray =
+    JSON.parse(localStorage.getItem(`dvsf_completed_tasks`)) || [];
   const userTasks = JSON.parse(localStorage.getItem(userSelect.value)) || [];
+  // console.log(username);
 
-  if (userTasks.length === 0) {
+  console.log(completedTasksArray);
+  console.log(`${userSelect.value}_completed_tasks`);
+  if (userTasks.length === 0 && completedTasksArray.length === 0) {
     uncompletedTasks.innerHTML = `<h4>No current tasks</h4><hr>`;
-    completedTasksAdd.remove();
+    completedTasks.remove();
   } else {
     uncompletedTasksTitle.classList.add("uncompleted-tasks__title");
     completedTasksTitle.classList.add("completed-tasks__title");
     uncompletedTasks.innerHTML = "";
-    completedTasksAdd.classList.add("completed-tasks");
-    tasks.insertBefore(completedTasksAdd, tasks.firstChild);
+    completedTasks.innerHTML = "";
+
+    tasks.insertBefore(completedTasks, tasks.firstChild);
     uncompletedTasks.appendChild(uncompletedTasksTitle);
-    completedTasksAdd.appendChild(completedTasksTitle);
+    completedTasks.appendChild(completedTasksTitle);
     uncompletedTasksTitle.innerHTML = "Uncompleted Tasks";
     completedTasksTitle.innerHTML = "Completed Tasks";
   }
@@ -196,16 +202,20 @@ const displayTasks = () => {
   for (let i = 0; i < userTasks.length; i++) {
     const task = userTasks[i];
 
-    // Set initial state of data-isImage1 attribute
-
-    // Check if isImage1 is false, and apply strike-through style
-    const strikeThroughStyle = isImage1 ? "" : "text-decoration: line-through;";
-
     uncompletedTasks.innerHTML += `<div class="task-bullet">
       <img class="bullet-point" src="images/scribble-bullet-point.png" data-isImage1="${isImage1}" />
-      <h4 style="${strikeThroughStyle}">${task}</h4></div>`; // Concatenate the HTML for each task
+      <h4>${task}</h4></div>`; // Concatenate the HTML for each task
+  }
+
+  for (let i = 0; i < completedTasksArray.length; i++) {
+    const task = completedTasksArray[i];
+    const strikeThroughStyle = "text-decoration: line-through;";
+    completedTasks.innerHTML += `<div class="task-bullet">
+    <img class="bullet-point" src="images/scribble-bullet-point-filled.png" data-isImage1="${!isImage1}" />
+    <h4 style="${strikeThroughStyle}">${task}</h4></div>`; // Concatenate the HTML for each task
   }
 };
+
 updatePageOnStorageChange();
 userSelect.addEventListener("change", displayTasks);
 
@@ -213,6 +223,16 @@ userSelect.addEventListener("change", displayTasks);
 
 tasks.addEventListener("click", function (event) {
   const clickedElement = event.target;
+  const taskElement = clickedElement.closest(".task-bullet");
+  const username = userSelect.value;
+  const taskText = taskElement.querySelector("h4").textContent;
+  const storedCompletedTasks =
+    JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
+  const removeCompletedTask = JSON.parse(localStorage.getItem(username)) || [];
+  const updatedCompletedTasks = removeCompletedTask.filter(
+    (task) => task !== taskText
+  );
+  const updatedTasks = storedCompletedTasks.filter((task) => task !== taskText);
 
   if (clickedElement.classList.contains("bullet-point")) {
     let isImage1 = clickedElement.getAttribute("data-isImage1") === "true";
@@ -228,30 +248,24 @@ tasks.addEventListener("click", function (event) {
     isImage1 = !isImage1;
     clickedElement.setAttribute("data-isImage1", isImage1.toString());
 
-    const taskElement = clickedElement.closest(".task-bullet");
-    const username = userSelect.value;
-    const taskText = taskElement.querySelector("h4").textContent;
-
     if (!isImage1) {
       taskElement.querySelector("h4").style.textDecoration = "line-through";
-      const storedCompletedTasks =
-        JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
-      storedCompletedTasks.push(taskElement.querySelector("h4").textContent);
+      storedCompletedTasks.push(taskText);
       localStorage.setItem(
         `${username}_completed_tasks`,
         JSON.stringify(storedCompletedTasks)
       );
+      localStorage.setItem(username, JSON.stringify(updatedCompletedTasks));
     } else {
       taskElement.querySelector("h4").style.textDecoration = "none";
-      const removeCompletedTask =
-        JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
-      const updatedTasks = removeCompletedTask.filter(
-        (task) => task !== taskText
-      );
+      taskElement.querySelector("h4").style.textDecoration = "none";
+      removeCompletedTask.push(taskText);
+      localStorage.setItem(username, JSON.stringify(removeCompletedTask));
       localStorage.setItem(
         `${username}_completed_tasks`,
         JSON.stringify(updatedTasks)
       );
     }
   }
+  updatePageOnStorageChange();
 });
