@@ -195,7 +195,13 @@ hr {
 .completed-tasks {
 }
 
+div[class*="tasks__title"] {
+  font-size: 25px;
+  font-weight: bold;
+}
+
 h4 {
+  font-weight: lighter;
   font-size: 20px;
 }
 
