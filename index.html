@@ -19,25 +19,27 @@
     <div class="wrapper">
       <audio id="clickSound1" src="audio/Erase-1.mp3"></audio>
       <audio id="clickSound2" src="audio/Erase-2.mp3"></audio>
-      <h1 class="title">TO-DO LIST</h1>
+      <div class="top-section">
+        <h1 class="title">TO-DO LIST</h1>
 
-      <div class="buttons">
-        <div class="new-task-container">
-          <img class="new-task-outline" src="images/scribble-add.png" />
-          <button class="new-task-btn">Add Task</button>
-        </div>
+        <div class="buttons">
+          <div class="new-task-container">
+            <img class="new-task-outline" src="images/scribble-add.png" />
+            <button class="new-task-btn">Add Task</button>
+          </div>
 
-        <div class="new-user-container">
-          <img class="new-user-outline" src="images/scribble-add.png" />
-          <button class="new-user-btn">Add User</button>
-        </div>
+          <div class="new-user-container">
+            <img class="new-user-outline" src="images/scribble-add.png" />
+            <button class="new-user-btn">Add User</button>
+          </div>
 
-        <div class="user-select">
-          <img class="select-arrow" src="images/scribble-triangle.png" />
+          <div class="user-select">
+            <img class="select-arrow" src="images/scribble-triangle.png" />
 
-          <select id="userSelect">
-            <option value="">Select a user</option>
-          </select>
+            <select id="userSelect">
+              <option value="">Select a user</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="add-user-box">
@@ -69,9 +71,8 @@
         </form>
       </div>
       <div class="tasks">
-        <div class="completed-tasks"></div>
-
         <div class="uncompleted-tasks"></div>
+        <div class="completed-tasks"></div>
       </div>
     </div>
     <script src="main.js" defer></script>
