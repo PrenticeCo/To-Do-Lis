@@ -21,10 +21,11 @@ body {
 .tasks {
   padding: 15px;
   width: calc(100% - 200px);
-  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   margin: auto;
-  margin-top: 40px;
+  margin-top: -15px;
+  margin-bottom: 30px;
   width: calc(100% - 200px);
   background-color: yellow;
 }
@@ -88,7 +89,7 @@ button {
   font-size: 25px;
   padding: 5px;
   appearance: none;
-  margin-left: -25px;
+  margin-left: -30px;
   z-index: 1;
   transition: 0.3s;
 }
@@ -153,18 +154,48 @@ hr {
   top: 10px;
   width: 20px;
   cursor: pointer;
-  transform: rotate(-15deg);
+  transform: rotate(-5deg);
   transition: transform 0.3s;
 }
 
 .cross:hover {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.15);
+}
+
+.cross-red__container {
+  /* width: 20%; */
+  display: flex;
+  flex-shrink: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.cross-red {
+  width: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cross-red:hover {
+  transform: scale(1.2);
 }
 
 .wrapper {
   max-width: 1024px;
   min-width: 768px;
   margin: auto;
+}
+
+.top-section {
+  max-width: 650px;
+  margin: auto;
+  margin-top: 30px;
+  border-radius: 25px;
+  padding-bottom: 60px;
+  background-image: url("images/paper-background.jpg");
+  background-size: cover;
+  border: solid grey 1px;
+  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.15);
 }
 
 .bullet-point {
@@ -186,24 +217,25 @@ hr {
   margin-bottom: 3px;
   margin-top: 10px;
   border-bottom: solid 2px;
-  padding-left: 1px;
+  padding: 0 5px 0 1px;
+}
+
+.task-bullet h4 {
+  width: 92%;
 }
 
 .completed-tasks {
-  margin-bottom: 10px;
-}
-
-.completed-tasks {
+  margin-top: 50px;
 }
 
 div[class*="tasks__title"] {
-  font-size: 25px;
+  font-size: 27px;
   font-weight: bold;
 }
 
 h4 {
   font-weight: lighter;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .new-task-container {
@@ -225,6 +257,7 @@ h4 {
 }
 
 .new-task-btn {
+  font-size: 18px;
   transform: rotate(-3deg);
   transition: 0.2s;
 }
@@ -248,6 +281,7 @@ h4 {
 }
 
 .new-user-btn {
+  font-size: 18px;
   transform: rotate(5deg);
   transition: 0.2s;
 }
