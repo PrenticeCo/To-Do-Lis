@@ -1,3 +1,5 @@
+//VARIABLES
+
 const newUserScribble = document.querySelector(".new-user-outline");
 const newUserBox = document.querySelector(".add-user-box");
 const newTaskBox = document.querySelector(".add-task-box");
@@ -18,9 +20,15 @@ const uncompletedTasksTitle = document.createElement("div");
 const completedTasksTitle = document.createElement("div");
 const uncompletedTasks = document.querySelector(".uncompleted-tasks");
 const completedTasks = document.querySelector(".completed-tasks");
+const editTaskBox = document.querySelector(".edit-task-box");
+const editTaskBtn = document.querySelector(".edit-task__btn");
+const editTaskSubmit = document.querySelector(".edit-task-submit");
+const editTaskInput = document.querySelector(".edit-task");
 let username = userSelect.value;
 let isImage1 = true;
 let selectedUser;
+
+//FUNCTIONS
 
 //UPDATE PAGE WITH LOCAL STORAGE
 const updatePageOnStorageChange = () => {
@@ -32,6 +40,7 @@ const updatePageOnStorageChange = () => {
 const showNewUser = () => {
   newUserBox.style.display = "block";
   newTaskBox.style.display = "none";
+  editTaskBox.style.display = "none";
 };
 
 const showNewTask = () => {
@@ -40,11 +49,19 @@ const showNewTask = () => {
   }
   newTaskBox.style.display = "block";
   newUserBox.style.display = "none";
+  editTaskBox.style.display = "none";
+};
+
+const editTaskBoxFunction = () => {
+  editTaskBox.style.display = "block";
+  newUserBox.style.display = "none";
+  newTaskBox.style.display = "none";
 };
 
 const newBoxHide = () => {
   newUserBox.style.display = "none";
   newTaskBox.style.display = "none";
+  editTaskBox.style.display = "none";
 };
 
 const preventDefault = (event) => {
@@ -101,6 +118,8 @@ const updateSelectOptions = () => {
   }
 };
 
+//USER NOT SELECTED FUNCTION
+
 newTaskScribble.addEventListener("click", function () {
   if (userSelect.value === "") {
     userSelect.style.color = "red";
@@ -115,7 +134,6 @@ newTaskScribble.addEventListener("click", function () {
   }
 });
 
-// Call the function to initially update and hide options
 updateSelectOptions();
 
 //ADD TASK TO LOCAL
@@ -131,8 +149,6 @@ const addNewTask = (event) => {
   updatePageOnStorageChange();
 };
 
-newTaskSubmit.addEventListener("click", addNewTask);
-
 // DISPLAY TASKS
 
 const displayTasks = (event) => {
@@ -140,7 +156,6 @@ const displayTasks = (event) => {
   const completedTasksArray =
     JSON.parse(localStorage.getItem(`${username}_completed_tasks`)) || [];
   const userTasks = JSON.parse(localStorage.getItem(userSelect.value)) || [];
-  // console.log(`${userSelect.value}_completed_tasks`);
   if (userTasks.length === 0 && completedTasksArray.length === 0) {
     uncompletedTasks.innerHTML = `<h4>No current tasks</h4><hr>`;
     completedTasks.remove();
@@ -164,7 +179,7 @@ const displayTasks = (event) => {
 
     uncompletedTasks.innerHTML += `<div class="task-bullet">
       <img class="bullet-point" src="images/scribble-bullet-point.png" data-isImage1="${isImage1}" />
-      <h4>${task}</h4><div class="cross-red__container"><img class="cross-red" src="images/cross-red.png"></div></div>`;
+      <h4>${task}</h4><div class="cross-red__container"><button class="edit-task__btn">Edit</button><img class="cross-red" src="images/cross-red.png"></div></div>`;
   }
 
   for (let i = 0; i < completedTasksArray.length; i++) {
@@ -176,7 +191,7 @@ const displayTasks = (event) => {
   }
 };
 
-// CHANGE BULLET-POINT IMG AND STYLING
+// TASK FUNCTIONS
 
 tasks.addEventListener("click", function (event) {
   const clickedElement = event.target;
@@ -229,7 +244,6 @@ tasks.addEventListener("click", function (event) {
   const clickedElement = event.target;
   const taskElement = clickedElement.closest(".task-bullet");
   const taskText = taskElement.querySelector("h4").textContent;
-
   if (clickedElement.classList.contains("cross-red")) {
     const storedTasks = JSON.parse(localStorage.getItem(username)) || [];
     const updatedTasks = storedTasks.filter((task) => task !== taskText);
@@ -243,11 +257,36 @@ tasks.addEventListener("click", function (event) {
       `${username}_completed_tasks`,
       JSON.stringify(updatedCompletedTasks)
     );
-
-    console.log("Task removed:", taskText);
     updatePageOnStorageChange();
   } else {
     return;
+  }
+});
+
+tasks.addEventListener("click", function (event) {
+  const clickedElement = event.target;
+  const taskElement = clickedElement.closest(".task-bullet");
+
+  if (taskElement) {
+    const taskText = taskElement.querySelector("h4").textContent;
+    const storedTasks = JSON.parse(localStorage.getItem(username)) || [];
+    const updatedTasks = storedTasks.filter((task) => task !== taskText);
+
+    if (clickedElement.classList.contains("edit-task__btn")) {
+      console.log("hi");
+      editTaskBoxFunction();
+      editTaskInput.value = taskText;
+
+      editTaskSubmit.addEventListener("click", function () {
+        const editedTask = document.getElementById("edit-task").value; // Capture the updated value
+        localStorage.setItem(username, JSON.stringify(updatedTasks));
+
+        // Push the edited task
+        console.log(editedTask);
+        updatedTasks.push(editedTask);
+        localStorage.setItem(username, JSON.stringify(updatedTasks));
+      });
+    }
   }
 });
 
@@ -293,6 +332,7 @@ newUserScribble.addEventListener("click", showNewUser);
 newTaskScribble.addEventListener("click", showNewTask);
 newUserSubmit.addEventListener("click", preventDefault);
 newTaskSubmit.addEventListener("click", preventDefault);
+newTaskSubmit.addEventListener("click", addNewTask);
 
 //EXECUTIONS
 
