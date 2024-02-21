@@ -1,5 +1,7 @@
 //VARIABLES
 
+const popUpWrapper = document.querySelector(".pop-up-wrapper");
+const newUserForm = document.querySelector(".add-user-form");
 const newUserScribble = document.querySelector(".new-user-outline");
 const newUserBox = document.querySelector(".add-user-box");
 const newTaskBox = document.querySelector(".add-task-box");
@@ -30,6 +32,39 @@ let selectedUser;
 
 //FUNCTIONS
 
+window.addEventListener("click", function (event) {
+  if (newUserBox.style.display === "block") {
+    if (event.target !== newUserBox && event.target !== crosses) {
+      newUserBox.style.border = "solid red";
+      newUserBox.style.transform = "scale(1.1)";
+    }
+
+    setTimeout(function () {
+      newUserBox.style.border = "";
+      newUserBox.style.transform = "";
+    }, 500);
+  }
+});
+
+window.addEventListener("click", function () {
+  if (
+    newUserBox.style.display === "block" ||
+    newTaskBox.style.display === "block" ||
+    editTaskBox.style.display === "block"
+  ) {
+    popUpWrapper.style.position = "fixed";
+    popUpWrapper.style.left = "0";
+    popUpWrapper.style.right = "0";
+    popUpWrapper.style.top = "0";
+    popUpWrapper.style.bottom = "0";
+    popUpWrapper.style.zIndex = "3";
+  }
+});
+
+newUserBox.addEventListener("click", function (event) {
+  event.stopPropagation();
+});
+
 //UPDATE PAGE WITH LOCAL STORAGE
 const updatePageOnStorageChange = () => {
   displayTasks();
@@ -41,6 +76,7 @@ const showNewUser = () => {
   newUserBox.style.display = "block";
   newTaskBox.style.display = "none";
   editTaskBox.style.display = "none";
+  // newUserBox.style.transform = "translateY(-50%)";
 };
 
 const showNewTask = () => {
@@ -296,7 +332,15 @@ userSelect.addEventListener("change", function () {
 });
 
 crosses.forEach((cross) => {
-  cross.addEventListener("click", newBoxHide);
+  cross.addEventListener("click", function () {
+    newBoxHide();
+    popUpWrapper.style.position = "";
+    popUpWrapper.style.left = "";
+    popUpWrapper.style.right = "";
+    popUpWrapper.style.top = "";
+    popUpWrapper.style.bottom = "";
+    popUpWrapper.style.zIndex = "";
+  });
 });
 
 userSelectDiv.addEventListener("mouseenter", function () {
