@@ -125,9 +125,10 @@ hr {
   padding: 40px;
   left: 38%;
   top: 50%;
-  z-index: 1;
+  z-index: 4;
   overflow: auto;
   display: none;
+  transition: 0.1s;
 }
 
 .add-user-box__character {
@@ -142,7 +143,7 @@ hr {
   padding: 40px;
   left: 38%;
   top: 50%;
-  z-index: 1;
+  z-index: 4;
   background-color: #ffffff;
   overflow: auto;
   display: none;
@@ -155,10 +156,19 @@ hr {
   padding: 40px;
   left: 38%;
   top: 50%;
-  z-index: 1;
+  z-index: 4;
   background-color: #ffffff;
   overflow: auto;
   display: none;
+}
+
+.edit-task__btn {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-task__btn:hover {
+  transform: scale(1.2);
 }
 
 .cross {
