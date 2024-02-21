@@ -147,6 +147,7 @@ hr {
   background-color: #ffffff;
   overflow: auto;
   display: none;
+  transition: 0.1s;
 }
 
 .edit-task-box {
@@ -160,6 +161,7 @@ hr {
   background-color: #ffffff;
   overflow: auto;
   display: none;
+  transition: 0.1s;
 }
 
 .edit-task__btn {
@@ -177,12 +179,11 @@ hr {
   top: 10px;
   width: 20px;
   cursor: pointer;
-  transform: rotate(-5deg);
   transition: transform 0.3s;
 }
 
 .cross:hover {
-  transform: scale(1.15);
+  transform: scale(1.18);
 }
 
 .cross-red__container {
