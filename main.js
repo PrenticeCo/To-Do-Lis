@@ -32,21 +32,51 @@ let selectedUser;
 
 //FUNCTIONS
 
-window.addEventListener("click", function (event) {
-  if (newUserBox.style.display === "block") {
-    if (event.target !== newUserBox && event.target !== crosses) {
-      newUserBox.style.border = "solid red";
+document.addEventListener("click", function (event) {
+  if (
+    newUserBox.style.display === "block" &&
+    popUpWrapper.style.zIndex === "3"
+  ) {
+    if (event.target !== newUserBox) {
+      newUserBox.style.border = "solid 4px red";
       newUserBox.style.transform = "scale(1.1)";
     }
-
     setTimeout(function () {
       newUserBox.style.border = "";
       newUserBox.style.transform = "";
     }, 500);
   }
+
+  if (
+    editTaskBox.style.display === "block" &&
+    popUpWrapper.style.zIndex === "3"
+  ) {
+    if (event.target !== newUserBox) {
+      editTaskBox.style.border = "solid 4px red";
+      editTaskBox.style.transform = "scale(1.1)";
+    }
+    setTimeout(function () {
+      editTaskBox.style.border = "";
+      editTaskBox.style.transform = "";
+    }, 500);
+  }
+
+  if (
+    newTaskBox.style.display === "block" &&
+    popUpWrapper.style.zIndex === "3"
+  ) {
+    if (event.target !== newTaskBox) {
+      newTaskBox.style.border = "solid 4px red";
+      newTaskBox.style.transform = "scale(1.1)";
+    }
+    setTimeout(function () {
+      newTaskBox.style.border = "";
+      newTaskBox.style.transform = "";
+    }, 500);
+  }
 });
 
-window.addEventListener("click", function () {
+document.addEventListener("click", function () {
   if (
     newUserBox.style.display === "block" ||
     newTaskBox.style.display === "block" ||
@@ -65,6 +95,14 @@ newUserBox.addEventListener("click", function (event) {
   event.stopPropagation();
 });
 
+newTaskBox.addEventListener("click", function (event) {
+  event.stopPropagation();
+});
+
+editTaskBox.addEventListener("click", function (event) {
+  event.stopPropagation();
+});
+
 //UPDATE PAGE WITH LOCAL STORAGE
 const updatePageOnStorageChange = () => {
   displayTasks();
@@ -76,7 +114,6 @@ const showNewUser = () => {
   newUserBox.style.display = "block";
   newTaskBox.style.display = "none";
   editTaskBox.style.display = "none";
-  // newUserBox.style.transform = "translateY(-50%)";
 };
 
 const showNewTask = () => {
