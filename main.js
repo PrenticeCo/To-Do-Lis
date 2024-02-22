@@ -6,8 +6,9 @@ const newUserScribble = document.querySelector(".new-user-outline");
 const newUserBox = document.querySelector(".add-user-box");
 const newTaskBox = document.querySelector(".add-task-box");
 const newUserSubmit = document.querySelector(".new-user-submit");
+const newUserInput = document.getElementById("new-user");
+const newTaskInput = document.getElementById("new-task");
 const newTaskSubmit = document.querySelector(".new-task-submit");
-const newTask = document.getElementById("new-task");
 const userSelect = document.getElementById("userSelect");
 const newTaskScribble = document.querySelector(".new-task-outline");
 const crosses = document.querySelectorAll(".cross");
@@ -26,11 +27,22 @@ const editTaskBox = document.querySelector(".edit-task-box");
 const editTaskBtn = document.querySelector(".edit-task__btn");
 const editTaskSubmit = document.querySelector(".edit-task-submit");
 const editTaskInput = document.querySelector(".edit-task");
+const userRemoveBtn = document.querySelector(".user-remove__btn");
+const userRemoveDiv = document.querySelector(".user-remove");
 let username = userSelect.value;
 let isImage1 = true;
 let selectedUser;
 
 //FUNCTIONS
+
+const removeUser = () => {
+  localStorage.removeItem(username);
+  localStorage.removeItem(`${username}_completed_tasks`);
+  userSelect.value = userSelect.options[0].value;
+  updatePageOnStorageChange();
+};
+
+userRemoveBtn.addEventListener("click", removeUser);
 
 document.addEventListener("click", function (event) {
   if (
@@ -107,6 +119,8 @@ editTaskBox.addEventListener("click", function (event) {
 const updatePageOnStorageChange = () => {
   displayTasks();
   updateSelectOptions();
+  newTaskInput.value = "";
+  newUserInput.value = "";
 };
 
 // POP UP WINDOW
@@ -135,10 +149,6 @@ const newBoxHide = () => {
   newUserBox.style.display = "none";
   newTaskBox.style.display = "none";
   editTaskBox.style.display = "none";
-};
-
-const preventDefault = (event) => {
-  event.preventDefault();
 };
 
 //CREATE LOCAL STORAGE
@@ -212,9 +222,9 @@ updateSelectOptions();
 //ADD TASK TO LOCAL
 
 const addNewTask = (event) => {
-  if (username !== "" && newTask.value !== "") {
+  if (username !== "" && newTaskInput.value !== "") {
     const userTasks = JSON.parse(localStorage.getItem(username)) || [];
-    userTasks.push(newTask.value);
+    userTasks.push(newTaskInput.value);
     localStorage.setItem(username, JSON.stringify(userTasks));
   } else {
     alert("Please enter a task.");
@@ -261,6 +271,14 @@ const displayTasks = (event) => {
     completedTasks.innerHTML += `<div class="task-bullet">
     <img class="bullet-point" src="images/scribble-bullet-point-filled.png" data-isImage1="${!isImage1}" />
     <h4 style="${strikeThroughStyle}">${task}</h4><div class="cross-red__container"><img class="cross-red" src="images/cross-red.png"></div></div>`;
+  }
+
+  const selectedUser = userSelect.value;
+
+  if (localStorage.getItem(selectedUser)) {
+    userRemoveDiv.style.display = "block";
+  } else {
+    userRemoveDiv.style.display = "none";
   }
 };
 
@@ -407,6 +425,10 @@ newUserScribble.addEventListener("mouseleave", function () {
   newUserBtn.style.fontWeight = "normal";
   newUserBtn.style.transform = "rotate(5deg)";
 });
+
+const preventDefault = (event) => {
+  event.preventDefault();
+};
 
 window.addEventListener("storage", updatePageOnStorageChange);
 newUserScribble.addEventListener("click", showNewUser);
